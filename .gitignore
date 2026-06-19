@@ -10,3 +10,4 @@ gitignore
 .DS_Store
 .DS_Store
 ProyectoG2/nbproject/private/private.xml
+/ProyectoG2/build/
