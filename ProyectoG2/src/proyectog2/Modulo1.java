@@ -153,18 +153,36 @@ public class Modulo1 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    String equipos = "";
+    String totalArbitros = "00";
+    String totalSedes = "00";
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Modulo1Parte2 ventanaModulo1Parte2 = new Modulo1Parte2();
+        Modulo1Parte2 ventanaModulo1Parte2 = new Modulo1Parte2(totalArbitros, totalSedes);
         ventanaModulo1Parte2.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-    String equipos = "";
+    
     private void cantEquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantEquiposActionPerformed
         if(cantEquipos.getSelectedItem()!=null){
             equipos = cantEquipos.getSelectedItem().toString().trim();
             if(equipos.equals("24 Equipos")){
-                cantArbitros.setText("12 Arbitros");
+                totalArbitros = "12 Arbitros";
+            }else if(equipos.equals("32 Equipos")){
+                totalArbitros = "16 Arbitros";
+            }else if(equipos.equals("48 Equipos")){
+                totalArbitros = "24 Arbitros";
+            }else if(equipos.equals("64 Equipos")){
+                totalArbitros = "32 Arbitros";
+            }
+            
+            if(equipos.equals("24 Equipos")){
+                totalSedes = "6 Grupos, 6 Estadios";
+            }else if(equipos.equals("32 Equipos")){
+                totalSedes = "8 Grupos, 8 Estadios";
+            }else if(equipos.equals("48 Equipos")){
+                totalSedes = "12 Grupos, 12 Estadios";
+            }else if(equipos.equals("64 Equipos")){
+                totalSedes = "16 Grupos, 16 Estadios";
             }
         }
     }//GEN-LAST:event_cantEquiposActionPerformed

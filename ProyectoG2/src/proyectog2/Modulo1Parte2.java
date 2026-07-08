@@ -15,8 +15,17 @@ public class Modulo1Parte2 extends javax.swing.JFrame {
     /**
      * Creates new form Modulo1Parte2
      */
-    public Modulo1Parte2() {
+    public Modulo1Parte2(){
         initComponents();
+    }
+    private String txtArbitros;
+    private String txtSedes;
+    public Modulo1Parte2(String arbitros, String sedes) {
+        initComponents();
+        this.txtArbitros=arbitros;
+        cantArbitros.setText(arbitros);
+        this.txtSedes=sedes;
+        cantEstadios.setText(sedes);
     }
 
     /**
