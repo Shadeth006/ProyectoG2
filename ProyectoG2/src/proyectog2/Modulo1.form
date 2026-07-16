@@ -63,7 +63,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jButton6" max="32767" attributes="0"/>
+                              <Component id="botonDemo" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="nombreSede" min="-2" pref="330" max="-2" attributes="0"/>
@@ -72,25 +72,14 @@
                                   </Group>
                                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                       <Component id="jLabel3" min="-2" pref="164" max="-2" attributes="0"/>
-                                      <Component id="jTextField2" min="-2" pref="223" max="-2" attributes="0"/>
+                                      <Component id="nombreDirector" min="-2" pref="223" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel4" min="-2" pref="338" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" pref="338" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -101,8 +90,8 @@
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <Component id="cantEquipos" min="-2" pref="471" max="-2" attributes="0"/>
                                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
-                                  <Component id="jButton1" alignment="0" min="-2" pref="471" max="-2" attributes="0"/>
+                                  <Component id="nombrePais" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
+                                  <Component id="agregarPaisDirectorB" alignment="0" min="-2" pref="471" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -123,6 +112,14 @@
                       </Group>
                   </Group>
                   <EmptySpace pref="60" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel4" min="-2" pref="338" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="338" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -146,11 +143,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nombrePais" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nombreDirector" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="agregarPaisDirectorB" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -172,7 +169,7 @@
                       <Component id="agregarSedeB" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+                  <Component id="botonDemo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="32" max="32767" attributes="0"/>
@@ -227,27 +224,30 @@
             <Property name="text" type="java.lang.String" value="Director T&#xe9;cnico"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="nombrePais">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="12" style="0"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="nombreDirector">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="12" style="0"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="agregarPaisDirectorB">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Agregar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarPaisDirectorBActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
@@ -343,13 +343,16 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agregarSedeBActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton6">
+        <Component class="javax.swing.JButton" name="botonDemo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Generar Demo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonDemoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="cantArbitros1">
           <Properties>

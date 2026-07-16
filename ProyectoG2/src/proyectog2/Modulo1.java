@@ -37,9 +37,9 @@ public class Modulo1 extends javax.swing.JFrame {
         cantEquipos = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        nombrePais = new javax.swing.JTextField();
+        nombreDirector = new javax.swing.JTextField();
+        agregarPaisDirectorB = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -50,7 +50,7 @@ public class Modulo1 extends javax.swing.JFrame {
         agregarArbitroB = new javax.swing.JButton();
         nombreSede = new javax.swing.JTextField();
         agregarSedeB = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        botonDemo = new javax.swing.JButton();
         cantArbitros1 = new javax.swing.JLabel();
         cantEstadios = new javax.swing.JLabel();
 
@@ -77,12 +77,13 @@ public class Modulo1 extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel3.setText("Director Técnico");
 
-        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        nombrePais.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
-        jTextField2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        nombreDirector.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jButton1.setText("Agregar");
+        agregarPaisDirectorB.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        agregarPaisDirectorB.setText("Agregar");
+        agregarPaisDirectorB.addActionListener(this::agregarPaisDirectorBActionPerformed);
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel8.setText("Selección de Equipos");
@@ -118,8 +119,9 @@ public class Modulo1 extends javax.swing.JFrame {
         agregarSedeB.setText("Agregar Sede");
         agregarSedeB.addActionListener(this::agregarSedeBActionPerformed);
 
-        jButton6.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jButton6.setText("Generar Demo");
+        botonDemo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        botonDemo.setText("Generar Demo");
+        botonDemo.addActionListener(this::botonDemoActionPerformed);
 
         cantArbitros1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         cantArbitros1.setText("00");
@@ -136,7 +138,7 @@ public class Modulo1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonDemo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(nombreSede, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,17 +146,10 @@ public class Modulo1 extends javax.swing.JFrame {
                                     .addComponent(agregarSedeB, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(nombreDirector, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jButton2))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap()
+                        .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -164,8 +159,8 @@ public class Modulo1 extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addComponent(cantEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nombrePais, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(agregarPaisDirectorB, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,6 +174,12 @@ public class Modulo1 extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(cantEstadios))))))
                 .addContainerGap(60, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(126, 126, 126))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,10 +200,10 @@ public class Modulo1 extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombrePais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreDirector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(agregarPaisDirectorB)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -220,7 +221,7 @@ public class Modulo1 extends javax.swing.JFrame {
                     .addComponent(nombreSede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(agregarSedeB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton6)
+                .addComponent(botonDemo)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addContainerGap(32, Short.MAX_VALUE))
@@ -250,13 +251,19 @@ public class Modulo1 extends javax.swing.JFrame {
     
     private int contadorArbitros = 0;
     private int contadorSedes=0;
-    private int contador = 0;
+    private int contadorPaises = 0;
     
-    private String [] Arbitros;
-    private String[] Sedes;
-    Pais [] Pais;
+    private Arbitros [] arbitros;
+    private Sedes [] sedes;
+    private Pais [] paises;
+    
+    private void actualizarArbitrosSedes(){
+        cantArbitros1.setText("00/"+String.format("%02d", limiteArbitros));
+        cantEstadios.setText("00/"+String.format("%02d", limiteSedes));
+    }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
         
     }//GEN-LAST:event_jButton3ActionPerformed
     
@@ -264,20 +271,25 @@ public class Modulo1 extends javax.swing.JFrame {
         if(cantEquipos.getSelectedItem()!=null){
             equipos = cantEquipos.getSelectedItem().toString().trim();
             if(equipos.equals("24 Equipos")){
+                limiteEquipos =24;
                 limiteArbitros =12;
                 limiteSedes=6;
             }else if(equipos.equals("32 Equipos")){
+                limiteEquipos =32;
                 limiteArbitros = 16;
                 limiteSedes = 8;
             }else if(equipos.equals("48 Equipos")){
+                limiteEquipos=48;
                 limiteArbitros = 24;
                 limiteSedes=12;
             }else if(equipos.equals("64 Equipos")){
+                limiteEquipos=64;
                 limiteArbitros=32;
                 limiteSedes=16;
             }
-            Arbitros = new String[limiteArbitros];
-            Sedes = new String[limiteSedes];
+            paises = new Pais[limiteEquipos];
+            arbitros = new Arbitros[limiteArbitros];
+            sedes = new Sedes[limiteSedes];
             
             cantArbitros1.setText("00/"+String.format("%02d", limiteArbitros));
             cantEstadios.setText("00/"+String.format("%02d", limiteSedes));
@@ -301,7 +313,7 @@ public class Modulo1 extends javax.swing.JFrame {
         String nombreA = nombreArbitro.getText().trim();
         if (nombreA.isEmpty())return;
         
-        Arbitros [contadorArbitros]=nombreA;
+        arbitros [contadorArbitros]=new Arbitros(nombreA);
         contadorArbitros++;
         
         cantArbitros1.setText(String.format("%02d",contadorArbitros)+"/"+String.format("%02d",limiteArbitros));
@@ -317,12 +329,62 @@ public class Modulo1 extends javax.swing.JFrame {
         String nombreS = nombreSede.getText().trim();
         if (nombreS.isEmpty())return;
         
-        Sedes [contadorSedes]=nombreS;
+        sedes [contadorSedes]=new Sedes(nombreS);
         contadorSedes++;
         
         cantEstadios.setText(String.format("%02d",contadorSedes)+"/"+String.format("%02d",limiteSedes));
         nombreSede.setText("");
     }//GEN-LAST:event_agregarSedeBActionPerformed
+
+    private void agregarPaisDirectorBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarPaisDirectorBActionPerformed
+        if (limiteEquipos==0){
+            JOptionPane.showMessageDialog(null, "Primero debe seleccionar la cantidad de equipos.");
+            return;
+        }
+        if(contadorPaises >= limiteEquipos){
+            JOptionPane.showMessageDialog(null, "Cantidad máximas de equipos agregados.");
+            return;
+        }
+        
+        String pais = nombrePais.getText().trim();
+        String dt = nombreDirector.getText().trim();
+        
+        if (pais.isEmpty() || dt.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Favor llenar los campos de Pais y Director Técnico.");
+        }
+        
+        paises [contadorPaises]=new Pais(pais, dt);
+        contadorPaises++;
+        
+        nombrePais.setText("");
+        nombreDirector.setText("");
+    }//GEN-LAST:event_agregarPaisDirectorBActionPerformed
+
+    private void botonDemoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDemoActionPerformed
+        if (limiteEquipos==0){
+            JOptionPane.showMessageDialog(null, "Favor seleccione la cantidad de equipos antes de generar la demo.");
+            return;
+        }
+        String []nombrePaises={"Argentina","Brasil", "Uruguay","Paraguay","Chile","Colombia","Ecuador","Perú","Veneuela","Bolivia", "México"
+        +"Estados Unidos", "Canadá","Costa Rica","Panamá","Honduras","Jamaica","El Salvador","Guatemala","Trinidad y Tobago","Haití","Curazao"
+        +"Japón","Corea del Sur", "Australia","Arabia Saudita","Irán","Irak","Catar","Emiratos Árabes Unidos","Uzbekistán","Jordania","Omán"
+        +"China","Marruecos","Senegal","Egipto","Túnez","Argelia","Ghana","Nigeria","Camerún","Costa de Marfil", "Sudáfrica","República Democrática del Congo"
+        +"Cabo Verde","Alemania","España","Francia","Inglaterra","Italia","Portugal","Países Bajos","Bélgica","Croacia","Suiza","Dinamarca","Suecia","Noruega"
+        +"Polonia","Serbia","Turquía","Austria","República Checa","Escocia","Gales","Bosnia y Herzegovina","Ucrania","Nueva Zelanda", "Eslovaquia"};
+        
+        String []dts={"Thiago","Aitana","Gael", "Kiara","Elian","Amara","Dante","Zoe","Liam","Samira","Iker","Nayeli","Enzo","Briana","Milo","Celeste","Asher","Noemí","Elías","Renata"
+        +"Erza","Arlet","DylanAbril","Ian","Mía","Christopher","Julieta","Noah","Miranda","Axel","Salomé","Bruno","Violeta","Brandron","Alondra","Benjamín"
+        +"Raquel","León","Emilia","Matías","Fiorella","Adrián","Valeria","Issac","Alma","Damián","Darien","Fabián","Antonella","Ulises","Isadora","Teo"
+        +"Elisa","Jacobo","Nayra","Ciro","Ariana","Máximo","Romina","Eros","Dafne","Santino","Ana","Orlando","Melina","Romeo","Aylin","Zaid","Ofelia"};
+        
+        String []arbitros={"Diego","Sofía","Mateo", "Valentina","Santiago","Isabella","Sebastián","Camila","Nicolás","Daniela","Alejandro","Mariana"
+        +"Daniel","Lucía","Gabriel","Elena","David","Gabriela","Samuel","Natalia","Néstor","Óscar","Marcelo","Eduardo","Mauricio","Roberto"
+        +"Ronald","Zlatko","Dragan","Murat","Steve","Kasper","Luciano","Ralf","Julen","Montse","Sonia","Casey"};
+        
+        String []estadios={"Estadio Azteca","Estadio Akron","Estadio BBVA","MetLife Stadium","SoFi Stadium","Hard Rock Stadium","Lumen Field","Lincoln Financial Field"
+        +"AT&T Stadium","Mercedes-Benz Stadium","Levi's Stadium","NRG Stadium","Arrowhead Stadium","Gillette Stadium","BC Place","BMO Field","Wembley Stadium"
+        +"Santiago Bernabéu","Camp Nou","Allianz Arena","Maracaná","Lusail Stadium"};
+    }//GEN-LAST:event_botonDemoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,15 +413,15 @@ public class Modulo1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarArbitroB;
+    private javax.swing.JButton agregarPaisDirectorB;
     private javax.swing.JButton agregarSedeB;
+    private javax.swing.JButton botonDemo;
     private javax.swing.JLabel cantArbitros;
     private javax.swing.JLabel cantArbitros1;
     private javax.swing.JComboBox<String> cantEquipos;
     private javax.swing.JLabel cantEstadios;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -368,10 +430,10 @@ public class Modulo1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField nombreArbitro;
+    private javax.swing.JTextField nombreDirector;
+    private javax.swing.JTextField nombrePais;
     private javax.swing.JTextField nombreSede;
     // End of variables declaration//GEN-END:variables
 }
