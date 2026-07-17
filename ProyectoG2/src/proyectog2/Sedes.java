@@ -25,7 +25,7 @@ public class Sedes {
 
     @Override
     public String toString() {
-        return "Sedes{" + "Sedes=" + Sedes + '}';
+        return "Sedes{" + "Sedes= " + Sedes + '}';
     }
     
     

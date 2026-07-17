@@ -25,7 +25,7 @@ public class Arbitros {
 
     @Override
     public String toString() {
-        return "Arbitros{" + "nombreArbitro=" + nombreArbitro + '}';
+        return "Arbitros{" + "Nombre del Arbitro= " + nombreArbitro + '}';
     }
     
     

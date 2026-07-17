@@ -19,6 +19,7 @@ public class Modulo1 extends javax.swing.JFrame {
      */
     public Modulo1() {
         initComponents();
+        actualizarArbitrosSedes();
     }
     
     /**
@@ -96,7 +97,7 @@ public class Modulo1 extends javax.swing.JFrame {
         jLabel4.setText("Registro de Equipos");
 
         jButton3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jButton3.setText("Pasar");
+        jButton3.setText("Guardar");
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -263,8 +264,44 @@ public class Modulo1 extends javax.swing.JFrame {
     }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (limiteEquipos==0){
+            JOptionPane.showMessageDialog(null, "Primero debe seleccionar la cantidad de equipos y registrar los datos.");
+            return;
+        }
         
+        if(contadorPaises < limiteEquipos || contadorArbitros < limiteArbitros || contadorSedes < limiteSedes){
+            JOptionPane.showMessageDialog(null, "Aún no se puede guardar. Se deben completar los registros.");
+            return;
+        }
+        StringBuilder imprimirPaises = new StringBuilder();
+        for (int i = 0; i < contadorPaises; i++) {
+            if(paises[i]!=null){
+                imprimirPaises.append(paises[i].toString());
+                imprimirPaises.append("\n");
+            }
+        }
+        JOptionPane.showMessageDialog(null, imprimirPaises);
         
+        StringBuilder imprimirArbitros = new StringBuilder();
+        for (int i = 0; i < contadorArbitros; i++) {
+            if(arbitros[i]!=null){
+                imprimirArbitros.append(arbitros[i].toString());
+                imprimirArbitros.append("\n");
+            }   
+        }
+        JOptionPane.showMessageDialog(null, imprimirArbitros);
+        
+        StringBuilder imprimirSedes = new StringBuilder();
+        for (int i = 0; i < contadorSedes; i++) {
+            if(sedes[i]!=null){
+                imprimirSedes.append(sedes[i].toString());
+                imprimirSedes.append("\n");
+            }
+        }
+        JOptionPane.showMessageDialog(null, imprimirSedes);
+        Menu ventanaMenu = new Menu();
+        ventanaMenu.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
     
     private void cantEquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantEquiposActionPerformed
@@ -377,13 +414,32 @@ public class Modulo1 extends javax.swing.JFrame {
         +"Raquel","León","Emilia","Matías","Fiorella","Adrián","Valeria","Issac","Alma","Damián","Darien","Fabián","Antonella","Ulises","Isadora","Teo"
         +"Elisa","Jacobo","Nayra","Ciro","Ariana","Máximo","Romina","Eros","Dafne","Santino","Ana","Orlando","Melina","Romeo","Aylin","Zaid","Ofelia"};
         
-        String []arbitros={"Diego","Sofía","Mateo", "Valentina","Santiago","Isabella","Sebastián","Camila","Nicolás","Daniela","Alejandro","Mariana"
+        String []arbitros1={"Diego","Sofía","Mateo", "Valentina","Santiago","Isabella","Sebastián","Camila","Nicolás","Daniela","Alejandro","Mariana"
         +"Daniel","Lucía","Gabriel","Elena","David","Gabriela","Samuel","Natalia","Néstor","Óscar","Marcelo","Eduardo","Mauricio","Roberto"
         +"Ronald","Zlatko","Dragan","Murat","Steve","Kasper","Luciano","Ralf","Julen","Montse","Sonia","Casey"};
         
         String []estadios={"Estadio Azteca","Estadio Akron","Estadio BBVA","MetLife Stadium","SoFi Stadium","Hard Rock Stadium","Lumen Field","Lincoln Financial Field"
         +"AT&T Stadium","Mercedes-Benz Stadium","Levi's Stadium","NRG Stadium","Arrowhead Stadium","Gillette Stadium","BC Place","BMO Field","Wembley Stadium"
         +"Santiago Bernabéu","Camp Nou","Allianz Arena","Maracaná","Lusail Stadium"};
+        
+        for (int i = 0; i < limiteEquipos; i++) {
+            String p = nombrePaises[i%nombrePaises.length];
+            String d = dts[i%dts.length];
+            paises[i]=new Pais(p, d);
+        }
+        contadorPaises=limiteEquipos;
+        
+        for (int i = 0; i < limiteArbitros; i++) {
+            arbitros[i]=new Arbitros(arbitros1[i%arbitros1.length]);
+        }
+        contadorArbitros=limiteArbitros;
+        
+        for (int i = 0; i < limiteSedes; i++) {
+            sedes[i]=new Sedes(estadios[i%estadios.length]);
+        }
+        contadorSedes=limiteSedes;
+        
+        JOptionPane.showMessageDialog(null, "Demo generada\n-"+limiteEquipos+" Equipos generados.\n-"+limiteArbitros+" Árbitros generados.\n-"+limiteSedes+" Estadios genrados.");
     }//GEN-LAST:event_botonDemoActionPerformed
 
     /**

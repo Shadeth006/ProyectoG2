@@ -35,7 +35,7 @@ public class Pais {
 
     @Override
     public String toString() {
-        return "Pais{" + "pais=" + pais + ", directorTecnico=" + directorTecnico + '}';
+        return "País{" + "País= " + pais + ", Director Tecnico= " + directorTecnico + '}';
     }
     
     
