@@ -10,11 +10,13 @@ import controlador.Mundial;
 import modelo.*;
 // importacion de componentes swing para la interfaz grafica
 import javax.swing.*;
+import javax.swing.UIManager;
 // importacion del modelo de tablas para poder mostrar datos en tablas
 import javax.swing.table.DefaultTableModel;
 // importacion de clases para layouts y graficos 2d
 import java.awt.*;
-
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 /**
  * ventana principal del proyecto copa mundial java contiene pestañas para
  * configuracion, grupos, simulacion, eliminatorias y estadisticas es el punto
@@ -24,7 +26,72 @@ import java.awt.*;
  * @author grupo2
  */
 public class VentanaPrincipal extends JFrame {
+    private void cambiarLookAndFeel() {
+    try {
+        // Opciones disponibles:
+        // 1. Nimbus (moderno)
+        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        UIManager.put("nimbusGradient", new Color(0, 102, 204));
+        UIManager.put("nimbusSelectionBackground", new Color(0, 102, 204));
+        UIManager.put("nimbusBase", new Color(0, 102, 204));
+        UIManager.put("nimbusBlueGrey", new Color(200, 215, 230));
+        
+        // ⭐ Configurar botones para que usen colores sólidos
+       // UIManager.put("Button.background", new Color(0, 102, 204));
+       // UIManager.put("Button.foreground", Color.WHITE);
+       // UIManager.put("Button.font", new Font("Segoe UI", Font.BOLD, 16));
+        //UIManager.put("Button.focusWidth", 0);
+        
 
+        // PASO 3: Configurar colores de las pestañas (claves específicas de Nimbus)
+        // Texto de pestañas no seleccionadas
+        UIManager.put("TabbedPane:TabbedPaneTab.textForeground", Color.WHITE);
+        // Texto de pestaña seleccionada
+        UIManager.put("TabbedPane:TabbedPaneTab.selectedTextForeground", Color.WHITE);
+        // Fuente de las pestañas
+        UIManager.put("TabbedPane:TabbedPaneTab.font", new Font("Century Gothic", Font.BOLD, 13));
+
+        // Fondo de pestañas no seleccionadas
+        UIManager.put("TabbedPane:TabbedPaneTab.background", new Color(0, 80, 160));
+        // Fondo de pestaña seleccionada
+        UIManager.put("TabbedPane:TabbedPaneTab.selectedBackground", new Color(0, 102, 204));
+
+        // Fondo del área de pestañas
+        UIManager.put("TabbedPane.background", new Color(0, 102, 204));
+
+        SwingUtilities.updateComponentTreeUI(this);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    private JButton crearBotonPersonalizado(String texto, Color color) {
+        JButton boton = new JButton(texto);
+        UIManager.put("nimbusGradient", new Color(0, 102, 204)); // Gradient sólido
+        UIManager.put("nimbusSelectionBackground", new Color(0, 102, 204));
+        
+        boton.setBackground(color);
+        boton.setForeground(Color.WHITE);
+        boton.setFont(new Font("Century Gothic", Font.BOLD, 16));
+        boton.setFocusPainted(false);
+        boton.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 25));
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        boton.setOpaque(true);
+        
+        // Efecto hover
+        boton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                boton.setBackground(color.brighter());
+               
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                boton.setBackground(color);
+               
+            }
+        });
+        
+        return boton;
+    }
+    
     // instancia del controlador que maneja toda la logica del torneo
     // es el objeto que contiene los arreglos de equipos, grupos, partidos y metodos de simulacion
     private Mundial mundial;
@@ -48,6 +115,12 @@ public class VentanaPrincipal extends JFrame {
     // utiliza paintcomponent para graficar los enfrentamientos
     private PanelBracket panelBracket;
 
+    private static final Color COLOR_PRIMARIO = new Color(0, 102, 204);
+    private static final Color COLOR_SECUNDARIO = new Color(255, 215, 0);
+    private static final Color COLOR_FONDO = new Color(240, 248, 255);
+    private static final Color COLOR_TEXTO = new Color(255, 255, 255);
+    private static final Color COLOR_EXITO = new Color(46, 139, 87);
+    private static final Color COLOR_INFO = new Color(70, 130, 180);
     /**
      * constructor de la ventana principal inicializa el controlador, configura
      * la ventana, crea las pestañas y las deshabilita inicialmente hasta que se
@@ -58,7 +131,7 @@ public class VentanaPrincipal extends JFrame {
         // crea una nueva instancia del controlador mundial
         // esto prepara el motor del torneo pero aun sin datos
         mundial = new Mundial();
-
+        cambiarLookAndFeel();
         // ---- configuracion de la ventana ----
         // establece el titulo que aparece en la barra superior de la ventana
         setTitle("Copa Mundial Java");
@@ -73,8 +146,12 @@ public class VentanaPrincipal extends JFrame {
 
         // ---- creacion del panel de pestañas ----
         // jtabbedpane permite agrupar contenido en pestañas seleccionables
+        UIManager.put("TabbedPane.foreground", Color.WHITE);
+        UIManager.put("TabbedPane.selectedForeground", Color.WHITE);
         tabbedPane = new JTabbedPane();
-
+        tabbedPane.setFont(new Font("Century Gothic", Font.BOLD, 13));
+        tabbedPane.setBackground(COLOR_PRIMARIO);
+        
         // añade cada pestaña con su panel correspondiente
         // el primer parametro es el titulo de la pestaña
         // el segundo es el panel que se mostrara al seleccionar la pestaña
@@ -102,6 +179,7 @@ public class VentanaPrincipal extends JFrame {
         // hace visible la ventana para que el usuario pueda interactuar
         // sin esta linea no se veria nada aunque ya este todo construido
         setVisible(true);
+       
     }
 
     /**
@@ -113,21 +191,31 @@ public class VentanaPrincipal extends JFrame {
      * @return jpanel configurado con todos los componentes
      */
     private JPanel crearPanelConfiguracion() {
+        cambiarLookAndFeel();
         // panel principal con borderlayout que divide en regiones (norte, centro, sur, etc)
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        panel.setBackground(COLOR_FONDO);
+        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        
         // panel superior con flowlayout que coloca los elementos en una fila horizontal
-        JPanel top = new JPanel(new FlowLayout());
+           JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+           top.setBackground(COLOR_FONDO);
+    
+
 
         // ---- componentes de la barra superior ----
         // combo desplegable con las opciones de cantidad de equipos
         // el usuario puede seleccionar 24, 32, 48 o 64
         JComboBox<Integer> combo = new JComboBox<>(new Integer[]{24, 32, 48, 64});
+        combo.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+        combo.setBackground(Color.WHITE);
+        
         // boton que configura el tamaño del mundial
-        JButton btnConfig = new JButton("Configurar");
+        JButton btnConfig = crearBotonPersonalizado("Configurar", COLOR_PRIMARIO);
         // boton que genera automaticamente equipos, jugadores, sedes y arbitros ficticios
-        JButton btnDemo = new JButton("Generar Datos Demo");
+        JButton btnDemo = crearBotonPersonalizado("Generar Datos Demo",COLOR_PRIMARIO);
         // boton que sortea los equipos en grupos de 4 y genera el calendario
-        JButton btnSortear = new JButton("Sortear Grupos");
+        JButton btnSortear = crearBotonPersonalizado("Sortear Grupos", COLOR_PRIMARIO);
 
         // añade los componentes al panel superior en orden
         top.add(new JLabel("Tamaño:"));
@@ -146,7 +234,9 @@ public class VentanaPrincipal extends JFrame {
         info.add(new JScrollPane(new JList<>())); // lista de sedes
         info.add(new JScrollPane(new JList<>())); // lista de arbitros
         panel.add(info, BorderLayout.CENTER);
+       
 
+        panel.add(info, BorderLayout.CENTER);
         // ---- accion del boton "configurar" ----
         // se usa una expresion lambda para el event listener
         btnConfig.addActionListener(e -> {
@@ -206,9 +296,13 @@ public class VentanaPrincipal extends JFrame {
      * @return jpanel para grupos
      */
     private JPanel crearPanelGrupos() {
+         
         // gridlayout con 0 filas (se calculan automaticamente), 4 columnas y espacio de 10 pixeles
         // si se cambia el 4 a 3, se veran 3 grupos por fila en lugar de 4
-        panelGrupos = new JPanel(new GridLayout(0, 4, 10, 10));
+        panelGrupos = new JPanel(new GridLayout(0, 4, 20, 20));
+        panelGrupos.setBackground(COLOR_FONDO);
+        panelGrupos.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+        panelGrupos.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         return panelGrupos;
     }
 
@@ -232,7 +326,8 @@ public class VentanaPrincipal extends JFrame {
         // recorre cada grupo para crear su tabla
         for (Grupo g : grupos) {
             // panel individual para cada grupo con borderlayout
-            JPanel p = new JPanel(new BorderLayout());
+             JPanel p = new JPanel(new BorderLayout(5, 5));
+             
             // pone un borde con el nombre del grupo como titulo (ej "grupo a")
             p.setBorder(BorderFactory.createTitledBorder(g.getNombre()));
 
@@ -289,6 +384,7 @@ public class VentanaPrincipal extends JFrame {
         // area de texto para mostrar los resultados
         // 20 filas y 60 columnas de texto
         areaSimulacion = new JTextArea(20, 60);
+        areaSimulacion.setFont(new Font("Century Gothic", Font.PLAIN, 12));
         // hace el area de solo lectura para que el usuario no pueda modificarla
         areaSimulacion.setEditable(false);
         // envuelve el area en un scrollpane y la coloca en el centro
@@ -390,18 +486,31 @@ public class VentanaPrincipal extends JFrame {
      * @return jpanel de estadisticas
      */
     private JPanel crearPanelEstadisticas() {
-        JPanel panel = new JPanel(new BorderLayout());
+        
+        //return panel;
+        JPanel panel = new JPanel(new BorderLayout(10, 10));
 
-        // area de texto para mostrar las estadisticas
+        // Panel superior con botones
+        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+
+        JButton btnAct = new JButton("Actualizar");
+        btnAct.setBackground(new Color(70, 130, 180));
+        btnAct.setForeground(Color.WHITE);
+        btnAct.setFont(new Font("Century Gothic", Font.BOLD, 12));
+        btnAct.setFocusPainted(false);
+
+        top.add(btnAct);
+        panel.add(top, BorderLayout.NORTH);
+
+        // Área de texto mejorada
         areaEstadisticas = new JTextArea(20, 60);
         areaEstadisticas.setEditable(false);
+        areaEstadisticas.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+        areaEstadisticas.setBackground(new Color(255, 255, 240));
         panel.add(new JScrollPane(areaEstadisticas), BorderLayout.CENTER);
 
-        // boton para actualizar las estadisticas manualmente
-        JButton btnAct = new JButton("Actualizar Estadísticas");
-        panel.add(btnAct, BorderLayout.NORTH);
-        // al hacer clic llama al metodo actualizarestadisticas
         btnAct.addActionListener(e -> actualizarEstadisticas());
+       
 
         return panel;
     }
@@ -475,6 +584,12 @@ public class VentanaPrincipal extends JFrame {
         return "Desconocido";
     }
 
+   
+     
+ 
+    
+ 
+ 
     /**
      * clase interna que extiende jpanel para dibujar el arbol de llaves
      * (bracket) recibe los arreglos de partidos de cada ronda y los dibuja en
