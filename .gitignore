@@ -12,3 +12,6 @@ gitignore
 ProyectoG2/nbproject/private/private.xml
 /ProyectoG2/build/
 /ProyectoG2/dist/
+/ProyectoG2/nbproject/private
+/ProyectoG2/nbproject/private
+ProyectoG2/nbproject/private/private.properties
