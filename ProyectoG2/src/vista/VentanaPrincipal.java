@@ -262,7 +262,7 @@ public class VentanaPrincipal extends JFrame {
             // esto crea equipos con 23 jugadores, sedes con capacidades aleatorias y arbitros
             mundial.generarDatosDemo();
             // mensaje de confirmacion
-            JOptionPane.showMessageDialog(this, "Datos demo generados.");
+            JOptionPane.showMessageDialog(this, "Datos demostrativos generados.");
         });
 
         // ---- accion del boton "sortear grupos" ----
