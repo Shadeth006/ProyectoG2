@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+import javax.swing.table.DefaultTableCellRenderer;
 /**
  * ventana principal del proyecto copa mundial java contiene pestañas para
  * configuracion, grupos, simulacion, eliminatorias y estadisticas es el punto
@@ -105,7 +106,8 @@ public class VentanaPrincipal extends JFrame {
 
     // area de texto para mostrar los resultados de los partidos simulados
     // actua como un registro de eventos en tiempo real
-    private JTextArea areaSimulacion;
+    private DefaultTableModel modeloTablaSimulacion;
+    private JTable tablaSimulacion;
 
     // area de texto para mostrar las estadisticas finales del torneo
     // incluye campeon, goleadores, disciplina y finanzas
@@ -370,48 +372,98 @@ public class VentanaPrincipal extends JFrame {
      * @return jpanel de simulacion
      */
     private JPanel crearPanelSimulacion() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JPanel top = new JPanel(new FlowLayout());
+        JPanel panel = new JPanel(new BorderLayout(15,15));
+        panel.setBackground(new Color(40,44,52));
+        panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        
+        JPanel top = new JPanel(new FlowLayout(FlowLayout.CENTER, 20,10));
+        top.setOpaque(false);
 
         // boton para simular un solo partido (el siguiente no jugado)
-        JButton btnPartido = new JButton("Simular Partido a Partido");
+        JButton btnPartido = crearBotonPersonalizado("Simular Partido a Partido", new Color(25,30,40));
         // boton para simular todos los partidos pendientes de la fase de grupos
-        JButton btnFase = new JButton("Simular Fase Completa");
+        JButton btnFase = crearBotonPersonalizado("Simular Fase Completa",new Color(25,30,40));
         top.add(btnPartido);
         top.add(btnFase);
         panel.add(top, BorderLayout.NORTH);
-
-        // area de texto para mostrar los resultados
-        // 20 filas y 60 columnas de texto
-        areaSimulacion = new JTextArea(20, 60);
-        areaSimulacion.setFont(new Font("Century Gothic", Font.PLAIN, 12));
-        // hace el area de solo lectura para que el usuario no pueda modificarla
-        areaSimulacion.setEditable(false);
-        // envuelve el area en un scrollpane y la coloca en el centro
-        panel.add(new JScrollPane(areaSimulacion), BorderLayout.CENTER);
+        
+        String[] columnas ={"Local","Resultado","Visitante"};
+        modeloTablaSimulacion=new DefaultTableModel(columnas, 0){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }    
+        };
+        tablaSimulacion = new JTable(modeloTablaSimulacion);
+        tablaSimulacion.setRowHeight(36);
+        tablaSimulacion.setShowGrid(false);
+        tablaSimulacion.setIntercellSpacing(new Dimension(0,0));
+        tablaSimulacion.setFont(new Font("Century Gothic",Font.PLAIN,13));
+        tablaSimulacion.setBackground(new Color(48,54,64));
+        tablaSimulacion.setForeground(Color.WHITE);
+        
+        tablaSimulacion.setTableHeader(null);//Oculta los encabezados
+        
+        DefaultTableCellRenderer renderSimulacion = new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column){
+                JLabel label =(JLabel)super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                
+                if(row % 2 == 0){
+                    label.setBackground(new Color(48,54,64));
+                }else{
+                    label.setBackground(new Color(40,45,54));
+                }
+                label.setForeground(Color.WHITE);
+                
+                if(column == 0){
+                    label.setHorizontalAlignment(SwingConstants.RIGHT);
+                    label.setFont(new Font("Century Gothic",Font.BOLD,13));
+                }else if(column == 1){
+                    label.setHorizontalAlignment(SwingConstants.CENTER);
+                    label.setFont(new Font("Century Gothic",Font.BOLD,14));
+                    label.setForeground(new Color(220,225,230));
+                }else if(column ==2){
+                    label.setHorizontalAlignment(SwingConstants.LEFT);
+                    label.setFont(new Font("Century Gothic",Font.BOLD,13));
+                }
+                return label;
+            }
+        };
+        
+        for (int i = 0; i < tablaSimulacion.getColumnCount(); i++) {
+            tablaSimulacion.getColumnModel().getColumn(i).setCellRenderer(renderSimulacion);
+        }
+        
+        tablaSimulacion.getColumnModel().getColumn(0).setPreferredWidth(260);//Local
+        tablaSimulacion.getColumnModel().getColumn(1).setPreferredWidth(100);//resultado
+        tablaSimulacion.getColumnModel().getColumn(2).setPreferredWidth(260);//visitante
+        
+        JScrollPane scrollPane = new JScrollPane(tablaSimulacion);
+        scrollPane.getViewport().setBackground(new Color(40,44,52));
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(60,66,78),1));
+        
+        panel.add(scrollPane, BorderLayout.CENTER);
+        
 
         // ---- accion del boton "simular partido a partido" ----
         btnPartido.addActionListener(e -> {
             // solicita al controlador el siguiente partido no jugado y lo simula
             Partido p = mundial.simularSiguientePartido();
             if (p != null) {
-                // si hay partido, muestra el resultado en el area de texto
-                // formato: "brasil 2 - 1 argentina"
-                areaSimulacion.append(
-                        p.getLocal().getNombrePais() + " " + p.getGolesLocal()
-                        + " - " + p.getGolesVisitante() + " " + p.getVisitante().getNombrePais() + "\n"
-                );
+                agregarPartidoATabla(p);
+                tablaSimulacion.scrollRectToVisible(tablaSimulacion.getCellRect(tablaSimulacion.getRowCount()-1,0,true));
                 // actualiza las tablas de grupos con los nuevos datos
                 actualizarTablasGrupos();
                 // verifica si la fase de grupos esta completa
                 if (mundial.faseGruposCompleta()) {
-                    areaSimulacion.append("¡Fase de grupos completada!\n");
+                    JOptionPane.showMessageDialog(this,"¡Fase de grupos completada!\n");
                     // habilita la pestaña de eliminatorias
                     tabbedPane.setEnabledAt(3, true);
                 }
             } else {
                 // si no hay mas partidos muestra el mensaje
-                areaSimulacion.append("No hay más partidos.\n");
+                JOptionPane.showMessageDialog(this,"No hay más partidos.\n");
             }
         });
 
@@ -419,7 +471,8 @@ public class VentanaPrincipal extends JFrame {
         btnFase.addActionListener(e -> {
             // simula todos los partidos pendientes de la fase de grupos
             mundial.simularFaseCompleta();
-            areaSimulacion.append("Fase de grupos completada.\n");
+            cargarTodosLosPartidos();
+            JOptionPane.showMessageDialog(this,"Fase de grupos completada.\n");
             // actualiza las tablas de grupos
             actualizarTablasGrupos();
             // habilita la pestaña de eliminatorias
@@ -428,7 +481,28 @@ public class VentanaPrincipal extends JFrame {
 
         return panel;
     }
-
+    
+    public void agregarPartidoATabla(Partido p){
+        String local = p.getLocal().getNombrePais();
+        String marcador = p.getGolesLocal()+" - "+p.getGolesVisitante();
+        String visitante = p.getVisitante().getNombrePais();
+        
+        modeloTablaSimulacion.addRow(new Object[]{local,marcador,visitante});
+    }
+    public void cargarTodosLosPartidos(){
+        modeloTablaSimulacion.setRowCount(0);
+        if(mundial != null && mundial.getGrupos()!= null){
+            for (Grupo g : mundial.getGrupos()) {
+                if(g != null && g.getPartidos()!=null){
+                    for (Partido p : g.getPartidos()) {
+                        if (p != null && p.isJugado()){
+                            agregarPartidoATabla(p);
+                        }
+                    }
+                }
+            }
+        }
+    }
     /**
      * crea el panel de eliminatorias contiene un boton para iniciar las
      * eliminatorias y el panelbracket para dibujar el arbol de llaves
@@ -440,6 +514,10 @@ public class VentanaPrincipal extends JFrame {
 
         // boton que inicia el proceso de clasificacion y simulacion de eliminatorias
         JButton btnIniciar = new JButton("Iniciar Eliminatorias");
+        btnIniciar.setFont(new Font("Century Gothic",Font.BOLD,14));
+        btnIniciar.setBackground(new Color(40,45,54));
+        btnIniciar.setForeground(Color.WHITE);
+        btnIniciar.setFocusPainted(false);
         panel.add(btnIniciar, BorderLayout.NORTH);
 
         // panel personalizado que dibujara el bracket
@@ -599,7 +677,11 @@ public class VentanaPrincipal extends JFrame {
 
         // arreglos de partidos de cada ronda
         private Partido[] octavos, cuartos, semis, finalP;
-
+        
+        public PanelBracket(){
+            setBackground(new Color(90,100,115));//fondo gris
+        }
+        
         /**
          * asigna los partidos de cada ronda al panel este metodo se llama desde
          * el boton de iniciar eliminatorias
@@ -614,6 +696,7 @@ public class VentanaPrincipal extends JFrame {
             this.cuartos = c;
             this.semis = s;
             this.finalP = f;
+            repaint();
         }
 
         /**
@@ -631,12 +714,17 @@ public class VentanaPrincipal extends JFrame {
 
             // si no hay octavos (aun no se han generado) muestra un mensaje
             if (octavos == null) {
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Century Gothic", Font.BOLD,14));
                 g.drawString("Sin llaves", 50, 50);
                 return;
             }
 
             // convierte a graphics2d para mejor control de dibujo
             Graphics2D g2 = (Graphics2D) g;
+            
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             // coordenadas y tamaños:
             // x: posicion horizontal inicial de la columna
             // y: posicion vertical inicial
@@ -645,13 +733,33 @@ public class VentanaPrincipal extends JFrame {
             // sep: separacion entre rectangulos de una misma columna
             // si se cambia ancho a 80, los textos se cortan
             // si se cambia sep a 20, los rectangulos se superponen
-            int x = 50, y = 50, ancho = 120, alto = 25, sep = 35;
-
+            int ancho = 180, alto = 50, sep = 66;
+            int gapColumna = 95; // espacio entre columnas
+            int totalColumnas = 4;
+            int anchoTotal=(totalColumnas*ancho)+((totalColumnas-1)*gapColumna);
+            int altoTotal = (octavos.length*sep)-(sep-alto);
+            
+            int x = Math.max(30,(getWidth()-anchoTotal)/2);
+            int yCalculado = (getHeight()-altoTotal)/2;
+            int y= Math.max(85, Math.min(yCalculado,110));
+            
+            Font fuenteTitulos = new Font("Century Gothic", Font.BOLD,16);
+            
             // ---- columna de octavos ----
             // dibuja el titulo
-            g2.drawString("Octavos", x, y - 10);
+            
+            g2.setFont(fuenteTitulos);
+            g2.setColor(Color.WHITE);
+            
+            g2.drawString("Octavos", x, y - 15);
+            
+            int[]yOctavos = new int [octavos.length];
+            
             // recorre cada partido de octavos
             for (int i = 0; i < octavos.length; i++) {
+                yOctavos[i]=y + i * sep;
+                DibujarTarjeta(g2, octavos[i], x, yOctavos[i], ancho, alto);
+                
                 Partido p = octavos[i];
                 // construye el texto con los nombres de los equipos
                 String txt = p.getLocal().getNombrePais() + " vs " + p.getVisitante().getNombrePais();
@@ -659,54 +767,67 @@ public class VentanaPrincipal extends JFrame {
                 if (p.isJugado()) {
                     txt += " " + p.getGolesLocal() + "-" + p.getGolesVisitante();
                 }
-                // dibuja el rectangulo en la posicion calculada (x, y + i*sep)
-                g2.drawRect(x, y + i * sep, ancho, alto);
-                // dibuja el texto dentro del rectangulo desplazado 5 pixeles a la derecha y 18 abajo
-                g2.drawString(txt, x + 5, y + i * sep + 18);
+                
             }
 
             // ---- columna de cuartos ----
             // se desplaza a la derecha (ancho + 60)
-            int x2 = x + ancho + 60;
-            g2.drawString("Cuartos", x2, y - 10);
+            int x2 = x + ancho + gapColumna;
+            g2.setFont(fuenteTitulos);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Cuartos", x2, y - 15);
+            int [] yCuartos = new int[cuartos.length];
             for (int i = 0; i < cuartos.length; i++) {
+                yCuartos[i]=(yOctavos[i * 2] + yOctavos[i * 2 + 1])/2;
+                DibujarTarjeta(g2, cuartos[i], x2, yCuartos[i], ancho, alto);
+                
                 Partido p = cuartos[i];
                 String txt = p.getLocal().getNombrePais() + " vs " + p.getVisitante().getNombrePais();
                 if (p.isJugado()) {
                     txt += " " + p.getGolesLocal() + "-" + p.getGolesVisitante();
                 }
-                // la separacion vertical es el doble (sep * 2) para alinear con los ganadores de octavos
-                g2.drawRect(x2, y + i * sep * 2, ancho, alto);
-                g2.drawString(txt, x2 + 5, y + i * sep * 2 + 18);
+                
             }
+            LineasFlujo(g2, x + ancho, yOctavos, x2, alto);
 
             // ---- columna de semifinales ----
-            int x3 = x2 + ancho + 60;
-            g2.drawString("Semis", x3, y - 10);
+            int x3 = x2 + ancho + gapColumna;
+            g2.setFont(fuenteTitulos);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Semis", x3, y - 15);
+            int[] ySemis = new int[semis.length];
             for (int i = 0; i < semis.length; i++) {
+                ySemis[i]=(yCuartos[i * 2]+ yCuartos[i * 2 + 1])/2;
+                DibujarTarjeta(g2, semis[i], x3, ySemis[i], ancho, alto);
+                
                 Partido p = semis[i];
                 String txt = p.getLocal().getNombrePais() + " vs " + p.getVisitante().getNombrePais();
                 if (p.isJugado()) {
                     txt += " " + p.getGolesLocal() + "-" + p.getGolesVisitante();
                 }
-                // separacion cuatriple (sep * 4)
-                g2.drawRect(x3, y + i * sep * 4, ancho, alto);
-                g2.drawString(txt, x3 + 5, y + i * sep * 4 + 18);
+                
             }
+            LineasFlujo(g2, x2 + ancho, yCuartos, x3, alto);
 
             // ---- columna de la final ----
-            int x4 = x3 + ancho + 60;
-            g2.drawString("Final", x4, y - 10);
+            int x4 = x3 + ancho + gapColumna;
+            g2.setFont(fuenteTitulos);
+            g2.setColor(Color.WHITE);
+            g2.drawString("Final", x4, y - 15);
+            
             // solo hay un partido de final, si existe
             if (finalP != null && finalP.length > 0) {
+                int yFinal =(ySemis[0] + ySemis[1])/2;
+                DibujarTarjeta(g2, finalP[0], x4, yFinal, ancho, alto);
+                
+                
                 Partido p = finalP[0];
                 String txt = p.getLocal().getNombrePais() + " vs " + p.getVisitante().getNombrePais();
                 if (p.isJugado()) {
                     txt += " " + p.getGolesLocal() + "-" + p.getGolesVisitante();
                 }
-                // se dibuja en la posicion central (y + sep * 4)
-                g2.drawRect(x4, y + sep * 4, ancho, alto);
-                g2.drawString(txt, x4 + 5, y + sep * 4 + 18);
+                LineasFlujo(g2, x3 + ancho, ySemis, x4, alto);
+                
             }
         }
     }
@@ -719,6 +840,69 @@ public class VentanaPrincipal extends JFrame {
      *
      * @param args argumentos de linea de comandos (no se usan)
      */
+    
+    private String RecortarTexto(String texto,int max){
+        return (texto.length()>max) ? texto.substring(0, max -1)+ "..":texto;
+    }
+    
+    private void DibujarTarjeta(Graphics2D g2, Partido p, int x, int y, int ancho, int alto){
+        g2.setColor(new Color (185,195,205));
+        g2.fillRoundRect(x, y, ancho, alto, 8, 8);
+        
+        g2.setColor(new Color(130,140,155));
+        g2.setStroke(new BasicStroke(1));
+        g2.drawRoundRect(x, y, ancho, alto, 8, 8);
+        
+        int anchoGoles = 30;
+        g2.setColor(new Color (40,45,55));
+        g2.fillRoundRect(x + ancho - anchoGoles, y, anchoGoles, alto, 8, 8);
+        g2.fillRect(x + ancho - anchoGoles, y, 6, alto);
+        
+        if (p != null){
+            g2.setFont(new Font("Century Gothic", Font.BOLD, 12));
+            g2.setColor(new Color(25,30,38));
+            
+            String local = RecortarTexto(p.getLocal().getNombrePais(),13);
+            String vis =RecortarTexto(p.getVisitante().getNombrePais(), 13);
+            
+            g2.drawString(local, x + 6, y + 18);
+            g2.drawString(vis, x + 6, y + 38);
+            
+            if(p.isJugado()){
+                g2.setColor(Color.WHITE);
+                g2.setFont(new Font("Century Gothic",Font.BOLD,12));
+                g2.drawString(String.valueOf(p.getGolesLocal()), x + ancho - 20, y + 18);
+                g2.drawString(String.valueOf(p.getGolesVisitante()), x + ancho - 20, y + 38);
+            }
+        }
+        
+        
+        
+    }
+    
+    private void LineasFlujo(Graphics2D g2, int xOrigen, int [] yOrigen, int xDestino, int altoTarjeta){
+       g2.setColor(new Color(150,165,180));
+       g2.setStroke(new BasicStroke(1.5f));
+       int medioX = (xOrigen + xDestino)/2;
+       
+        for (int i = 0; i < yOrigen.length; i += 2) {
+            if(i + 1 >= yOrigen.length)break;
+            
+            int y1 = yOrigen[i] + (altoTarjeta/2);
+            int y2 = yOrigen[i+1] + (altoTarjeta/2);
+            int yCentro = (y1+y2)/2;
+            
+            g2.drawLine(xOrigen, y1, medioX, y1);
+            g2.drawLine(xOrigen, y2, medioX, y2);
+            
+            g2.drawLine(medioX, y1, medioX, y2);
+            
+            g2.drawLine(medioX, yCentro, xDestino, yCentro);
+        }
+    }
+    
+    
+    
     public static void main(String[] args) {
         // invokeLater asegura que la creacion de la ventana se ejecute en el edt
         // ventanaprincipal::new es una referencia al constructor
