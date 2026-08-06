@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Partido.java</file>
-            <file>file:/E:/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Grupo.java</file>
-            <file>file:/E:/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Equipo.java</file>
-            <file>file:/E:/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Sede.java</file>
-            <file>file:/E:/Documents/GitHub/ProyectoG2/ProyectoG2/src/vista/VentanaPrincipal.java</file>
-            <file>file:/E:/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Arbitro.java</file>
-            <file>file:/E:/Documents/GitHub/ProyectoG2/ProyectoG2/src/controlador/Mundial.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/controlador/Mundial.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Arbitro.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Equipo.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Grupo.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Jugador.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Partido.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/modelo/Sede.java</file>
+            <file>file:/Users/jafeth/Documents/GitHub/ProyectoG2/ProyectoG2/src/vista/VentanaPrincipal.java</file>
         </group>
     </open-files>
 </project-private>
